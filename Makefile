@@ -13,7 +13,7 @@ OBJCOPY = avr-objcopy
 # To calculate the fuses, see http://www.engbedded.com/fusecalc
 LFUSE    = 0xff
 HFUSE    = 0xc9
-BITCLOCK = 250
+BITCLOCK = 4
 F_CPU    = 8000000  # Main clock frequency (8.0Mhz)
 
 # Compile flags

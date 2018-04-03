@@ -43,6 +43,12 @@ void display_init(void) {
     DDRC = 0xFF;
     DDRD |= _BV(PD5) | _BV(PD7);
 
+    /* debugging danilo */
+    PORTA = 3 | (3 << 4);
+    PORTB = 3 | (3 << 4);
+    PORTC = 3 | (3 << 4);
+    while (1) { /* busy loop */ }
+
     /* digit test */
     display_hv_on();
     for (uint8_t i = 0; i < 10; i++) {

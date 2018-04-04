@@ -1,7 +1,7 @@
 /*
     dcfreceiver.c
     DCF77 controlled Nixie clock project (https://neon1.net/nixieclock)
-    written by Manuel Kasper <mk@neon1.net>
+    written by Manuel Kasper <mk@neon1.net>, released under Public Domain
 */
 #include <inttypes.h>
 #include <avr/io.h>

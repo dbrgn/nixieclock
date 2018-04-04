@@ -1,7 +1,7 @@
 /*
     display.h
     DCF77 controlled Nixie clock project (https://neon1.net/nixieclock)
-    written by Manuel Kasper <mk@neon1.net>
+    written by Manuel Kasper <mk@neon1.net>, released under Public Domain
 */
 #ifndef _DISPLAY_H
 #define _DISPLAY_H

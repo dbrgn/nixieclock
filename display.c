@@ -1,7 +1,7 @@
 /*
     display.c
     DCF77 controlled Nixie clock project (https://neon1.net/nixieclock)
-    written by Manuel Kasper <mk@neon1.net>
+    written by Manuel Kasper <mk@neon1.net>, released under Public Domain
 */
 #include <avr/io.h>
 #include <util/delay.h>

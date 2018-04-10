@@ -10,7 +10,7 @@ Code released under Public Domain / CC0.
 
 ## Flashing Code
 
-    make upload
+    make flash
 
 ## Setting Fuses
 

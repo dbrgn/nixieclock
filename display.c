@@ -13,12 +13,12 @@
    via BCD decoders (74141) as follows:
 
 
-    PA3..0        H
-    PA7..4        H
+    PA3..0        S
+    PA7..4        S
     PB3..0        M
     PB7..4        M
-    PC3..0        S
-    PC7..4        S
+    PC3..0        H
+    PC7..4        H
 
     PD7            HV power supply shutdown
     PD5            RH decimal point (blinks if clock synced)
@@ -33,9 +33,6 @@
 #define HV_OFF_HOUR    4
 #define HV_OFF_MINUTE 0
 
-/* More digit mapping to correct wrong pin mapping in EAGLE... */
-static uint8_t tube_digit_map[] = {1,0,9,8,7,6,5,4,3,2};
-
 void display_init(void) {
     /* enable our ports for output */
     DDRA = 0xFF;
@@ -43,13 +40,12 @@ void display_init(void) {
     DDRC = 0xFF;
     DDRD |= _BV(PD5) | _BV(PD7);
 
-    /* digit test */
+    /* digit test: cycle through all digits from 0 through 9 */
     display_hv_on();
     for (uint8_t i = 0; i < 10; i++) {
-        PORTA = tube_digit_map[i] | (tube_digit_map[i] << 4);
-        PORTB = tube_digit_map[i] | (tube_digit_map[i] << 4);
-        PORTC = tube_digit_map[i] | (tube_digit_map[i] << 4);
-
+        PORTA = i | (i << 4);
+        PORTB = i | (i << 4);
+        PORTC = i | (i << 4);
         _delay_ms(250);
     }
 
@@ -61,15 +57,16 @@ void display_update_time(void) {
     struct wallclock_t time;
     clock_get_wallclock(&time);
 
-    PORTA = tube_digit_map[(time.hour / 10)] | (tube_digit_map[time.hour % 10] << 4);
-    PORTB = tube_digit_map[(time.min / 10)]  | (tube_digit_map[time.min % 10] << 4);
-    PORTC = tube_digit_map[(time.sec / 10)]  | (tube_digit_map[time.sec % 10] << 4);
+    PORTA = (time.sec / 10)  | ((time.sec % 10) << 4);
+    PORTB = (time.min / 10)  | ((time.min % 10) << 4);
+    PORTC = (time.hour / 10) | ((time.hour % 10) << 4);
 
     /* show blinking 1 Hz LED/decimal point */
-    if (time.msec < 500)
+    if (time.msec < 500) {
         PORTD |= _BV(PD5);
-    else
+    } else {
         PORTD &= ~_BV(PD5);
+    }
 
     /* turn on HV power supply and turn off DCF77 receiver if synced */
     if (clock_is_synced()) {

@@ -40,7 +40,7 @@ ${BIN}.elf: ${OBJS}
 
 all: $(TARGET)
 
-upload: $(TARGET)
+flash: $(TARGET)
 	$(DUDE) -v -c $(PROGRAMMER) -p $(MCU_DUDE) -P usb -B $(BITCLOCK) -F -U flash:w:$(TARGET):i
 
 setfuses:

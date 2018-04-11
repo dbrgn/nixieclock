@@ -30,7 +30,7 @@
     sync is obtained.
 */
 
-#define HV_OFF_HOUR    4
+#define HV_OFF_HOUR   4
 #define HV_OFF_MINUTE 0
 
 void display_init(void) {
@@ -57,16 +57,18 @@ void display_update_time(void) {
     struct wallclock_t time;
     clock_get_wallclock(&time);
 
-    PORTA = (time.sec / 10)  | ((time.sec % 10) << 4);
-    PORTB = (time.min / 10)  | ((time.min % 10) << 4);
-    PORTC = (time.hour / 10) | ((time.hour % 10) << 4);
+    PORTA = (time.sec % 10)  | ((time.sec / 10) << 4);
+    PORTB = (time.min % 10)  | ((time.min / 10) << 4);
+    PORTC = (time.hour % 10) | ((time.hour / 10) << 4);
 
-    /* show blinking 1 Hz LED/decimal point */
-    if (time.msec < 500) {
-        PORTD |= _BV(PD5);
-    } else {
-        PORTD &= ~_BV(PD5);
-    }
+    /* show blinking 1 Hz LED/decimal point
+       (disabled, since I accidentally soldered the tubes
+       onto the wrong side...) */
+    /* if (time.msec < 500) {
+           PORTD |= _BV(PD5);
+       } else {
+           PORTD &= ~_BV(PD5);
+       } */
 
     /* turn on HV power supply and turn off DCF77 receiver if synced */
     if (clock_is_synced()) {
